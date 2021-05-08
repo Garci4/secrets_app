@@ -19,7 +19,7 @@ class Secret
         $viewed = 0;
         $expired = 0;
 
-        $link = 'perro';
+        $link = sha1(md5($key_word));
 
         $query = "INSERT INTO SECRETS (message, key_word, link, viewed, expired, expires) VALUES ('$secret', '$key_word', '$link', '$viewed', '$expired', '$expires');";
 
@@ -37,9 +37,44 @@ class Secret
     /**
      * Returns a particular secret based on a given link
      */
-    public function get_secret()
+    public function get_secret($con, $_link)
     {
-        echo "this is a secret by get";
+        //Me llega un link -> busco secreto que tenga ese link, chequeo que no haya expirado, marco como visto segun corresponda, devuelvo el secreto
+        $query = "SELECT * FROM SECRETS WHERE link = '$_link'";
+
+        $data = mysqli_query($con, $query);
+
+        $json = null;
+
+        if(mysqli_num_rows($data) == 1) {
+            $row = mysqli_fetch_array($data);
+            $update_query = null;
+            
+            if($row['viewed']<1){
+                //no fue visto, lo marco como visto
+                $_viewed = 1;
+                $_expired = 0;
+                $_current_date = date("Y-m-d H:i:s");
+                if($row['expires'] > $_current_date){
+                    //no expiró
+                    $json = array("message" => $row['message']);
+                }
+                else {
+                    $_expired = 1;
+                    $json = array("message" => "El secreto ha expirado");
+                }
+                $update_query = "UPDATE SECRETS SET viewed='$_viewed', expired='$_expired' WHERE link='$_link'";
+                $upd = mysqli_query($con, $update_query);
+            }
+            else {
+                $json = array("message" => "El secreto ya fue visto");
+            }
+        }
+        else {
+            $json = array("Error" => "No pudimos encontrar ese secreto");
+        }
+
+        return $json;
     }
 
 }
