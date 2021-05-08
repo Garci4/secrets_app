@@ -1,5 +1,6 @@
 <?php
   include_once 'secrets.php';
+  header("Access-Control-Allow-Origin: *");
 
   $secret = new Secret();
 

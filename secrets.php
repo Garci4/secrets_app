@@ -57,7 +57,7 @@ class Secret
                 $_current_date = date("Y-m-d H:i:s");
                 if($row['expires'] > $_current_date){
                     //no expiró
-                    $json = array("message" => $row['message']);
+                    $json = array("message" => $row['message'], "key_word" => $row['key_word']);
                 }
                 else {
                     $_expired = 1;
