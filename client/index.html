@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./index.js"></script>
+  <title>Secrets</title>
+</head>
+<body>
+  <div class="div_main">
+    <div>
+      <p class="title_secret">
+        WRITE A SECRET
+      </p>
+    </div>
+    <div class="form_secret">
+      <textarea class="textarea_form_secret" id="id_message" placeholder="here goes your secret"></textarea>
+    </div>
+    <div class="form_key_word">
+      <input type="text" id="id_key_word" class="form_key_word" />
+      <label class="form-label" for="typeText">Key word</label>
+    </div>
+    <div class="form_expire_date">
+      <input type="date" id="id_expire_date" class="form_expire_date" />
+      <label class="form-label" for="typeText">Expire date</label>
+    </div>
+    <div class="div_button">
+      <input type="button" class="button_link" value="get a link" onclick="get_link()"/>
+    </div>
+
+    <div class="form_link">
+      <input type="text" id="id_link" class="form_link"/>
+      <label class="form-label" for="typeText">link</label>
+    </div>
+  </div>
+</body>
+</html>
